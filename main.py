@@ -1,19 +1,41 @@
 import calculators
+from industries import INDUSTRIES, KPI_LABELS
 from utils import (
     print_header,
-    display_menu,
     print_result,
     print_error,
-    about,
     pause,
     get_float,
     get_int,
 )
 
 
-def calc_revenue_growth():
-    print("\n  Revenue Growth")
-    print("  How much did revenue grow vs the previous period?")
+# ── KPI input handlers ────────────────────────────────────────────────────────
+
+def run_kpi(kpi_key: str):
+    handlers = {
+        "revenue_growth":            _calc_revenue_growth,
+        "customer_acquisition_cost": _calc_cac,
+        "churn_rate":                _calc_churn,
+        "conversion_rate":           _calc_conversion,
+        "average_order_value":       _calc_aov,
+        "customer_lifetime_value":   _calc_clv,
+        "gross_profit_margin":       _calc_gross_margin,
+        "net_profit_margin":         _calc_net_margin,
+        "clv_to_cac_ratio":          _calc_clv_cac,
+        "mrr":                            _calc_mrr,
+        "overall_equipment_effectiveness": _calc_oee,
+        "production_yield":                _calc_production_yield,
+        "inventory_turnover":              _calc_inventory_turnover,
+        "research_and_development_ratio":  _calc_rd_ratio,
+    }
+    fn = handlers.get(kpi_key)
+    if fn:
+        fn()
+
+
+def _calc_revenue_growth():
+    print("\n  Enter values for Revenue Growth")
     print("-" * 45)
     current  = get_float("Current period revenue")
     previous = get_float("Previous period revenue")
@@ -23,9 +45,8 @@ def calc_revenue_growth():
         print_error(str(e))
 
 
-def calc_cac():
-    print("\n  Customer Acquisition Cost (CAC)")
-    print("  How much does it cost to acquire one new customer?")
+def _calc_cac():
+    print("\n  Enter values for Customer Acquisition Cost")
     print("-" * 45)
     marketing = get_float("Total marketing spend")
     sales     = get_float("Total sales team spend")
@@ -36,9 +57,8 @@ def calc_cac():
         print_error(str(e))
 
 
-def calc_churn():
-    print("\n  Churn Rate")
-    print("  What percentage of customers did you lose?")
+def _calc_churn():
+    print("\n  Enter values for Churn Rate")
     print("-" * 45)
     lost     = get_int("Customers lost in the period")
     at_start = get_int("Customers at the start of the period")
@@ -48,9 +68,8 @@ def calc_churn():
         print_error(str(e))
 
 
-def calc_conversion():
-    print("\n  Conversion Rate")
-    print("  What % of visitors became customers?")
+def _calc_conversion():
+    print("\n  Enter values for Conversion Rate")
     print("-" * 45)
     conversions = get_int("Number of conversions (purchases / sign-ups)")
     visitors    = get_int("Total visitors or leads")
@@ -60,9 +79,8 @@ def calc_conversion():
         print_error(str(e))
 
 
-def calc_aov():
-    print("\n  Average Order Value (AOV)")
-    print("  How much does each order earn on average?")
+def _calc_aov():
+    print("\n  Enter values for Average Order Value")
     print("-" * 45)
     revenue = get_float("Total revenue in the period")
     orders  = get_int("Total number of orders")
@@ -72,9 +90,8 @@ def calc_aov():
         print_error(str(e))
 
 
-def calc_clv():
-    print("\n  Customer Lifetime Value (CLV)")
-    print("  How much is one customer worth over their lifetime?")
+def _calc_clv():
+    print("\n  Enter values for Customer Lifetime Value")
     print("-" * 45)
     aov       = get_float("Average order value (AOV)")
     frequency = get_float("Average purchases per year per customer")
@@ -85,9 +102,8 @@ def calc_clv():
         print_error(str(e))
 
 
-def calc_gross_margin():
-    print("\n  Gross Profit Margin")
-    print("  How much is left after cost of goods?")
+def _calc_gross_margin():
+    print("\n  Enter values for Gross Profit Margin")
     print("-" * 45)
     revenue = get_float("Total revenue")
     cogs    = get_float("Cost of goods sold (COGS)")
@@ -97,9 +113,8 @@ def calc_gross_margin():
         print_error(str(e))
 
 
-def calc_net_margin():
-    print("\n  Net Profit Margin")
-    print("  How much is left after ALL expenses?")
+def _calc_net_margin():
+    print("\n  Enter values for Net Profit Margin")
     print("-" * 45)
     net_profit = get_float("Net profit (can be negative)", allow_negative=True)
     revenue    = get_float("Total revenue")
@@ -109,9 +124,8 @@ def calc_net_margin():
         print_error(str(e))
 
 
-def calc_clv_cac():
-    print("\n  CLV : CAC Ratio")
-    print("  Is acquiring customers actually worth it?")
+def _calc_clv_cac():
+    print("\n  Enter values for CLV : CAC Ratio")
     print("-" * 45)
     clv = get_float("Customer Lifetime Value (CLV)")
     cac = get_float("Customer Acquisition Cost (CAC)")
@@ -121,39 +135,186 @@ def calc_clv_cac():
         print_error(str(e))
 
 
-MENU = {
-    "1":  calc_revenue_growth,
-    "2":  calc_cac,
-    "3":  calc_churn,
-    "4":  calc_conversion,
-    "5":  calc_aov,
-    "6":  calc_clv,
-    "7":  calc_gross_margin,
-    "8":  calc_net_margin,
-    "9":  calc_clv_cac,
-    "10": about,
-    "11": None,  # Exit
-}
+def _calc_oee():
+    print("\n  Enter values for Overall Equipment Effectiveness (OEE)")
+    print("  Each value is a percentage (0–100).")
+    print("-" * 45)
+    availability = get_float("Availability %  (planned time the machine was actually running)")
+    performance  = get_float("Performance %   (actual speed vs ideal speed)")
+    quality      = get_float("Quality %       (good units vs total units produced)")
+    try:
+        print_result(calculators.overall_equipment_effectiveness(availability, performance, quality))
+    except ValueError as e:
+        print_error(str(e))
 
+
+def _calc_production_yield():
+    print("\n  Enter values for Production Yield")
+    print("-" * 45)
+    good_units  = get_int("Good units produced (passed quality check)")
+    total_units = get_int("Total units produced")
+    try:
+        print_result(calculators.production_yield(good_units, total_units))
+    except ValueError as e:
+        print_error(str(e))
+
+
+def _calc_inventory_turnover():
+    print("\n  Enter values for Inventory Turnover")
+    print("-" * 45)
+    cogs      = get_float("Cost of goods sold (COGS) for the period")
+    avg_inv   = get_float("Average inventory value for the period")
+    try:
+        print_result(calculators.inventory_turnover(cogs, avg_inv))
+    except ValueError as e:
+        print_error(str(e))
+
+
+def _calc_rd_ratio():
+    print("\n  Enter values for R&D Ratio")
+    print("-" * 45)
+    rd_spend = get_float("Total R&D spend for the period")
+    revenue  = get_float("Total revenue for the period")
+    try:
+        print_result(calculators.research_and_development_ratio(rd_spend, revenue))
+    except ValueError as e:
+        print_error(str(e))
+
+
+def _calc_mrr():
+    print("\n  Enter values for Monthly Recurring Revenue")
+    print("-" * 45)
+    subscribers = get_int("Total active subscribers")
+    arpu        = get_float("Average revenue per user per month (ARPU)")
+    try:
+        print_result(calculators.mrr(subscribers, arpu))
+    except ValueError as e:
+        print_error(str(e))
+
+
+# ── Industry selection ────────────────────────────────────────────────────────
+
+def select_industry() -> dict | None:
+    print("\n" + "=" * 45)
+    print("  Step 1 — Select your Industry")
+    print("=" * 45)
+
+    for key, ind in INDUSTRIES.items():
+        print(f"  {key}. {ind['name']}")
+        print(f"     {ind['description']}")
+
+    print("  0. Exit")
+    print()
+
+    choice = input("Enter number: ").strip()
+
+    if choice == "0":
+        return None
+
+    industry = INDUSTRIES.get(choice)
+    if not industry:
+        print_error("Invalid choice.")
+        return select_industry()
+
+    return industry
+
+
+def show_industry_info(industry: dict):
+    print()
+    print("=" * 45)
+    print(f"  Industry : {industry['name']}")
+    print(f"  About    : {industry['description']}")
+    print("=" * 45)
+    print()
+    print("  Industry Benchmarks & Tips:")
+    for tip in industry["tips"]:
+        print(f"    • {tip}")
+
+
+# ── KPI selection ─────────────────────────────────────────────────────────────
+
+def select_kpis(industry: dict) -> list:
+    kpi_keys = industry["kpis"]
+
+    print()
+    print("=" * 45)
+    print("  Step 2 — Suggested KPIs for your Industry")
+    print("=" * 45)
+    print()
+    print("  The following KPIs are most relevant for")
+    print(f"  {industry['name']} businesses:\n")
+
+    for i, key in enumerate(kpi_keys, start=1):
+        label = KPI_LABELS.get(key, key)
+        print(f"  {i:>2}. {label}")
+
+    print()
+    print("  Enter the numbers you want to calculate,")
+    print("  separated by commas  (e.g. 1,3,5)")
+    print("  or press Enter to calculate ALL of them.")
+    print()
+
+    raw = input("  Your choice: ").strip()
+
+    if not raw:
+        return kpi_keys  # all of them
+
+    selected = []
+    for part in raw.split(","):
+        part = part.strip()
+        if part.isdigit():
+            idx = int(part) - 1
+            if 0 <= idx < len(kpi_keys):
+                selected.append(kpi_keys[idx])
+            else:
+                print_error(f"  '{part}' is out of range — skipped.")
+        else:
+            print_error(f"  '{part}' is not a valid number — skipped.")
+
+    if not selected:
+        print_error("No valid KPIs selected. Please try again.")
+        return select_kpis(industry)
+
+    return selected
+
+
+# ── Main loop ─────────────────────────────────────────────────────────────────
 
 def main():
     while True:
         print_header()
-        display_menu()
+        print("  Welcome! Let's start by identifying")
+        print("  your industry so we can suggest the")
+        print("  most relevant KPIs for your business.")
 
-        choice = input("\nEnter your choice: ").strip()
+        industry = select_industry()
 
-        if choice == "11":
+        if industry is None:
             print("\nGoodbye!")
             break
 
-        action = MENU.get(choice)
-        if action is None:
-            print_error("Invalid choice. Please select 1–11.")
-        else:
-            action()
-
+        show_industry_info(industry)
         pause()
+
+        chosen_kpis = select_kpis(industry)
+
+        print()
+        print("=" * 45)
+        print(f"  Calculating {len(chosen_kpis)} KPI(s)...")
+        print("=" * 45)
+
+        for kpi_key in chosen_kpis:
+            run_kpi(kpi_key)
+            print()
+
+        print("=" * 45)
+        print("  All done! Want to calculate more KPIs?")
+        print("=" * 45)
+
+        again = input("\n  Calculate again? (y/n): ").strip().lower()
+        if again != "y":
+            print("\nGoodbye!")
+            break
 
 
 if __name__ == "__main__":
