@@ -10,8 +10,6 @@ from utils import (
 )
 
 
-# ── KPI input handlers ────────────────────────────────────────────────────────
-
 def run_kpi(kpi_key: str):
     handlers = {
         "revenue_growth":            _calc_revenue_growth,
@@ -192,7 +190,6 @@ def _calc_mrr():
         print_error(str(e))
 
 
-# ── Industry selection ────────────────────────────────────────────────────────
 
 def select_industry() -> dict | None:
     print("\n" + "=" * 45)
@@ -231,7 +228,6 @@ def show_industry_info(industry: dict):
         print(f"    • {tip}")
 
 
-# ── KPI selection ─────────────────────────────────────────────────────────────
 
 def select_kpis(industry: dict) -> list:
     kpi_keys = industry["kpis"]
@@ -278,8 +274,6 @@ def select_kpis(industry: dict) -> list:
     return selected
 
 
-# ── Main loop ─────────────────────────────────────────────────────────────────
-
 def main():
     while True:
         print_header()
@@ -319,3 +313,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+"""
+extra extra read all about it 
+malcolm's in his head and i cant get out of it 
+"""
