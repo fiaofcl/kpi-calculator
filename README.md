@@ -1,246 +1,173 @@
-````markdown
-# Business KPI Calculator (CLI)
+# Business KPI Recommendation Tool
 
-A terminal-based Key Performance Indicator (KPI) calculator designed for businesses across multiple industries.
+The Business KPI Recommendation Tool is a Python-based terminal application designed to help users explore, understand, and calculate Key Performance Indicators (KPIs) used across various industries and business processes. The project provides an interactive command-line interface that enables users to browse KPIs, learn their significance, understand their formulas, and calculate business metrics using real-world values.
 
-Select your industry, discover the most relevant KPIs, calculate metrics instantly, and receive:
-
-- Formula explanations
-- Plain-English descriptions
-- Industry benchmarks
-- Health ratings and insights
-
-Perfect for business students, entrepreneurs, analysts, and anyone learning business metrics.
+The primary objective of this project is to simplify the process of learning and applying business KPIs while demonstrating modular software development in Python. Instead of searching through multiple resources for KPI definitions and formulas, users can access everything from a single terminal application.
 
 ---
 
 ## Features
 
-- Supports 9 business industries
-- Calculates 14+ essential KPIs
-- Industry-specific recommendations and benchmarks
-- Beginner-friendly terminal interface
-- No external dependencies
-- Modular and easy to extend
+* Interactive command-line interface
+* Browse KPIs by industry
+* Browse KPIs by business process
+* View a complete KPI catalog
+* Search KPIs by keyword
+* View detailed KPI information including:
+
+  * Meaning
+  * Importance
+  * Formula
+  * Example
+  * Unit of measurement
+  * Performance indicator (Higher/Lower is better)
+  * Applicable industries
+  * Business process
+  * Improvement tips
+* Calculate KPI values using built-in calculators
+* Compare two KPIs side-by-side
+* Bookmark KPIs during the current session
+* View recently accessed KPIs
+* Random KPI exploration mode
+* Clean terminal interface with optional Rich library support
+* Automatic fallback to standard terminal output if Rich is not installed
 
 ---
 
-## Getting Started
+## Technologies Used
 
-### Requirements
+* Python 3
+* Rich (Optional)
+* Dataclasses
+* Standard Python Libraries
 
-- Python 3.10 or later
+---
 
-### Installation
+## Installation
 
-```bash
-git clone https://github.com/yourusername/kpi-cli.git
-cd kpi-cli
-```
-
-### Run the Application
+Clone the repository:
 
 ```bash
-python3 main.py
+git clone https://github.com/yourusername/Business-KPI-Recommendation-Tool.git
 ```
 
-No additional packages or setup are required.
+Navigate to the project directory:
+
+```bash
+cd Business-KPI-Recommendation-Tool
+```
+
+If you want the enhanced terminal interface, install Rich:
+
+```bash
+pip install rich
+```
+
+---
+
+## Running the Application
+
+Start the application by running:
+
+```bash
+python main.py
+```
+
+The program launches directly in the terminal and presents an interactive menu where users can navigate through industries, business processes, KPI categories, and calculators.
 
 ---
 
 ## Project Structure
 
 ```text
-kpi-cli/
-├── main.py          # CLI entry point and menu navigation
-├── calculators.py   # Pure KPI calculation functions
-├── industries.py    # Industry definitions and benchmarks
-├── utils.py         # Input handlers and formatting utilities
+Business-KPI-Recommendation-Tool/
+│
+├── main.py
+├── cli.py
+├── data.py
+├── calculators.py
+├── utils.py
 └── README.md
 ```
 
----
+### File Description
 
-## Application Flow
+**main.py**
 
-### Step 1 – Select an Industry
+Application entry point responsible for launching the command-line interface.
 
-Choose the business type that best matches your organization.
+**cli.py**
 
-```text
-=============================================
-  Step 1 — Select your Industry
-=============================================
-  1. E-commerce
-  2. SaaS / Software
-  3. Retail (Brick & Mortar)
-  4. Agency / Consulting
-  5. Restaurant / Food & Beverage
-  6. Healthcare / Clinic
-  7. Real Estate
-  8. Manufacturing
-  9. Pharma / Life Sciences
-  0. Exit
-```
+Contains the application's menu system, user interaction logic, and navigation between different sections.
+
+**data.py**
+
+Stores the KPI dataset and manages retrieval of KPI information based on user selections.
+
+**calculators.py**
+
+Contains the mathematical formulas and calculation logic used to compute different business KPIs.
+
+**utils.py**
+
+Provides helper functions for terminal presentation, menu rendering, user input handling, KPI formatting, and display utilities.
 
 ---
 
-### Step 2 – Learn Industry Benchmarks
+## Application Workflow
 
-Each industry includes:
-
-- Business overview
-- Recommended KPIs
-- Performance benchmarks
-- Practical tips and insights
-
-Example:
-
-```text
-=============================================
-  Industry : SaaS / Software
-  About    : Subscription software products
-=============================================
-
-• Churn is the #1 SaaS killer.
-• CLV:CAC should be ≥ 3:1.
-• Payback period ideally under 12 months.
-```
+1. Launch the application.
+2. Choose how you want to explore KPIs.
+3. Browse KPIs by industry or business process.
+4. Search for specific KPIs using keywords.
+5. View detailed KPI information.
+6. Calculate KPI values using the built-in calculators.
+7. Compare two KPIs to understand their differences.
+8. Bookmark important KPIs for quick access during the session.
+9. Continue exploring additional KPIs through the interactive menu system.
 
 ---
 
-### Step 3 – Calculate KPIs
+## What You Can Learn
 
-Select one or more KPIs and provide the required inputs.
+This project demonstrates concepts from both business analytics and software development, including:
 
-Example:
-
-```text
-=============================================
-  Step 2 — Suggested KPIs for your Industry
-=============================================
-
-1. Churn Rate
-2. Customer Lifetime Value (CLV)
-3. Customer Acquisition Cost (CAC)
-4. CLV : CAC Ratio
-5. Revenue Growth
-6. Net Profit Margin
-7. Monthly Recurring Revenue (MRR)
-```
-
-The application then displays:
-
-- Calculated value
-- Formula used
-- Interpretation
-- Benchmark comparison
+* Business Performance Measurement
+* Key Performance Indicators (KPIs)
+* Financial Metrics
+* Operational Metrics
+* Python Programming
+* Modular Application Design
+* Terminal-Based User Interfaces
+* Data Organization
+* User Input Validation
+* Command-Line Application Development
 
 ---
 
-## Supported Industries
+## Future Enhancements
 
-| Industry | Description |
-|----------|-------------|
-| E-commerce | Online retail and direct-to-consumer businesses |
-| SaaS / Software | Subscription-based software products |
-| Retail (Brick & Mortar) | Physical stores and supermarkets |
-| Agency / Consulting | Marketing, legal, design and consulting firms |
-| Restaurant / Food & Beverage | Restaurants, cafes and catering businesses |
-| Healthcare / Clinic | Medical, dental and wellness practices |
-| Real Estate | Property sales and management |
-| Manufacturing | Factories and industrial production |
-| Pharma / Life Sciences | Pharmaceutical and biotechnology companies |
+Potential improvements for future versions include:
 
----
-
-## Supported KPIs
-
-| KPI | Formula |
-|-----|----------|
-| Revenue Growth | ((Current − Previous) / Previous) × 100 |
-| Customer Acquisition Cost (CAC) | (Marketing + Sales Spend) / New Customers |
-| Churn Rate | (Lost Customers / Starting Customers) × 100 |
-| Conversion Rate | (Conversions / Visitors) × 100 |
-| Average Order Value (AOV) | Revenue / Orders |
-| Customer Lifetime Value (CLV) | AOV × Purchase Frequency × Lifespan |
-| Gross Profit Margin | ((Revenue − COGS) / Revenue) × 100 |
-| Net Profit Margin | (Net Profit / Revenue) × 100 |
-| CLV:CAC Ratio | CLV / CAC |
-| Monthly Recurring Revenue (MRR) | Subscribers × Average Revenue Per User |
-| Overall Equipment Effectiveness (OEE) | (Availability × Performance × Quality) / 100² |
-| Production Yield | (Good Units / Total Units) × 100 |
-| Inventory Turnover | COGS / Average Inventory |
-| R&D Ratio | (R&D Spend / Revenue) × 100 |
+* Persistent bookmark storage
+* Exporting KPI reports
+* Additional KPI calculators
+* More industry-specific KPI libraries
+* Interactive charts and graphs
+* Historical KPI tracking
+* Database integration
+* Graphical user interface using Streamlit or Tkinter
 
 ---
 
-## Example Output
+## About
 
-```text
-=============================================
- KPI: Customer Acquisition Cost (CAC)
-=============================================
+The Business KPI Recommendation Tool was developed as an educational Python project to make business performance metrics easier to understand and apply. By combining a structured KPI database with an interactive command-line interface and built-in calculation utilities, the application provides a practical learning environment for students, business professionals, and anyone interested in business analytics.
 
-Formula:
-CAC = Total Marketing & Sales Spend ÷ New Customers
-
-Result:
-₹1,250.00 per customer
-
-Health Rating:
-Excellent
-
-Interpretation:
-You spend ₹1,250 to acquire each new customer.
-```
-
----
-
-## Extending the Project
-
-1. Add a new industry to `industries.py`.
-2. Register KPI labels in `KPI_LABELS`.
-3. Add the calculation function in `calculators.py`.
-4. Register the input handler in `main.py`.
-
----
-
-## Educational Value
-
-This project helps users understand:
-
-- Business analytics
-- Financial metrics
-- Industry benchmarking
-- Data-driven decision making
-- Python CLI development and modular project design
-
----
-
-## Built With
-
-- Python 3.10+
-- Standard Library Only
-
-No third-party dependencies are required.
+The project follows a modular architecture, separating the application's interface, business logic, calculations, and data into individual components. This design improves readability, maintainability, and scalability while demonstrating good software engineering practices.
 
 ---
 
 ## License
 
-This project is open-source and available under the MIT License.
-
-This project is intended for learning and educational purposes.
-
----
-
-## Future Improvements
-
-- Export results to CSV or PDF
-- Save calculation history
-- Interactive charts
-- Multi-currency support
-- Flask web version
-- Dashboard with KPI trends and visualizations
-````
+This project is intended for educational and learning purposes. It may be used, modified, and extended for academic, personal, and non-commercial use.
