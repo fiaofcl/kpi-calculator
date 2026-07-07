@@ -6,26 +6,26 @@ Instead of hunting through spreadsheets and blog posts to remember what a KPI me
 
 ---
 
-## ✨ Features
+## Features
 
-- 🖥️ Interactive command-line interface
-- 🏭 Browse KPIs by **industry**
-- ⚙️ Browse KPIs by **business process**
-- 📚 View the complete KPI catalog
-- 🔍 Search KPIs by keyword
-- 📄 Detailed KPI views including:
+- Interactive command-line interface
+- Browse KPIs by **industry**
+- Browse KPIs by **business process**
+- View the complete KPI catalog
+- Search KPIs by keyword
+- Detailed KPI views including:
   - Meaning & importance
   - Formula & worked example
   - Unit of measurement
   - Whether higher or lower is better
   - Applicable industries & business process
   - Improvement tips
-- 🧮 Built-in calculators to compute KPI values from your own numbers
-- ⚖️ Side-by-side comparison of two KPIs
-- 🔖 Session bookmarks for quick access
-- 🕘 Recently viewed KPI history
-- 🎲 Random KPI exploration mode
-- 🎨 Clean terminal UI via the `rich` library, with automatic fallback to plain text if it isn't installed
+- Built-in calculators to compute KPI values from your own numbers
+- Side-by-side comparison of two KPIs
+- Session bookmarks for quick access
+- Recently viewed KPI history
+- Random KPI exploration mode
+- Clean terminal UI via the `rich` library, with automatic fallback to plain text if it isn't installed
 
 ---
 
