@@ -1,7 +1,3 @@
-"""
-cli.py — menu-driven controller. Talks to data.py for KPI lookups and
-utils.py for rendering. No file I/O except optional KPI export.
-"""
 from __future__ import annotations
 
 import csv
@@ -15,11 +11,6 @@ import calculators
 import utils
 
 EXPORT_DIR = Path(__file__).resolve().parent / "exports"
-
-# A few KPI names differ slightly from their calculator's key (e.g. the KPI
-# is called "Customer Churn Rate" but the calculator is keyed "churn_rate").
-# This maps calculator_key -> actual KPI key so the "Calculate" option still
-# shows up on the right KPI detail screen.
 CALCULATOR_KPI_ALIASES = {
     "churn_rate": "customer_churn_rate",
     "research_and_development_ratio": "r_d_ratio",
@@ -41,9 +32,6 @@ class KPICli:
         self.bookmarks: List[str] = []       # KPI keys, in-memory for this session
         self.recently_viewed: List[str] = []  # KPI keys, most recent first
 
-    # =========================================================================
-    # MAIN LOOP
-    # =========================================================================
 
     def run(self) -> None:
         utils.print_header(
@@ -149,7 +137,6 @@ class KPICli:
         if choice == 0:
             return None
         return processes[choice - 1]
-
     def _select_and_show_kpi(self, kpis: List[data.KPI], title: str = "KPIs") -> None:
         while True:
             labels = [f"{k.name}  ({k.process})" for k in kpis]
@@ -462,3 +449,6 @@ class KPICli:
             "  • Adding new industries/processes/KPIs only requires editing data.py.\n"
         )
         utils.pause()
+
+
+

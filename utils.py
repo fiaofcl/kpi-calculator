@@ -1,10 +1,3 @@
-"""
-Terminal presentation helpers.
-
-Uses the `rich` library for colored panels/tables when available, and
-falls back to clean plain-text output if `rich` isn't installed, so the
-CLI always runs (pure terminal, no browser/GUI/frontend involved).
-"""
 from __future__ import annotations
 
 from typing import Iterable, List, Optional, Sequence
@@ -24,9 +17,6 @@ except ImportError:  # pragma: no cover - exercised only without rich installed
     console = None
 
 
-# ---------------------------------------------------------------------------
-# Generic output helpers
-# ---------------------------------------------------------------------------
 
 def clear_screen() -> None:
     print("\n" * 2)
@@ -84,11 +74,6 @@ def confirm(prompt: str, default: bool = False) -> bool:
     if not answer:
         return default
     return answer in ("y", "yes")
-
-
-# ---------------------------------------------------------------------------
-# Numbered menus
-# ---------------------------------------------------------------------------
 
 def print_menu(title: str, options: Sequence[str], back_label: str = "Back", exit_label: Optional[str] = None) -> None:
     print_section(title)
@@ -283,3 +268,6 @@ def print_kpi_comparison(kpi_a: KPI, kpi_b: KPI) -> None:
             print(f"  A) {va}")
             print(f"  B) {vb}")
         print("=" * 60)
+
+
+

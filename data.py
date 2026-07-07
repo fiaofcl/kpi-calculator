@@ -1,10 +1,3 @@
-"""
-data.py — All KPI/industry/process data plus small lookup helpers.
-
-This is the ONLY file you edit to add new industries, processes, or KPIs.
-No other file needs to change. Everything here is a plain Python dict/list
-(no JSON files, no database) so the whole app is just 5 files.
-"""
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 

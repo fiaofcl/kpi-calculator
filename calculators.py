@@ -1,17 +1,6 @@
-"""
-Quick KPI calculators.
-
-Each function takes raw business numbers and returns a small result dict
-(result, unit, formula, description). This module is intentionally
-decoupled from the KPI catalog (data/kpis.json) — it's a "future
-extensibility" hook (see README) that currently covers the most commonly
-calculated KPIs. Add a new function + register it in CALCULATORS to
-support more.
-"""
 from __future__ import annotations
 
 from typing import Callable, Dict
-
 
 def revenue_growth(current_revenue: float, previous_revenue: float) -> dict:
     if previous_revenue == 0:
@@ -23,7 +12,6 @@ def revenue_growth(current_revenue: float, previous_revenue: float) -> dict:
         "description": "How much revenue grew or shrank vs the previous period. Positive = growth.",
     }
 
-
 def customer_acquisition_cost(marketing: float, sales: float, new_customers: int) -> dict:
     if new_customers <= 0:
         raise ValueError("New customers must be greater than zero.")
@@ -34,7 +22,6 @@ def customer_acquisition_cost(marketing: float, sales: float, new_customers: int
         "description": "Average cost to acquire one new customer. Compare to CLV to check profitability.",
     }
 
-
 def churn_rate(lost: int, at_start: int) -> dict:
     if at_start <= 0:
         raise ValueError("Customers at start must be greater than zero.")
@@ -44,7 +31,6 @@ def churn_rate(lost: int, at_start: int) -> dict:
         "formula": "(customers_lost / customers_at_start) × 100",
         "description": "Percentage of customers lost in a period. Lower is better.",
     }
-
 
 def conversion_rate(conversions: int, visitors: int) -> dict:
     if visitors <= 0:
@@ -184,9 +170,6 @@ def clv_to_cac_ratio(clv: float, cac: float) -> dict:
         "description": "Is acquisition profitable? A ratio of 3:1 or higher is healthy.",
     }
 
-
-# Registry: kpi_key -> (label, calculator function, [(param_prompt, kind), ...])
-# kind is "float" or "int"; used by the CLI to know which input helper to call.
 CALCULATORS: Dict[str, dict] = {
     "revenue_growth": {
         "label": "Revenue Growth", "fn": revenue_growth,
@@ -246,18 +229,9 @@ CALCULATORS: Dict[str, dict] = {
     "research_and_development_ratio": {
         "label": "R&D Ratio", "fn": research_and_development_ratio,
         "params": [("Total R&D spend", "float"), ("Total revenue", "float")],
+
     },
 }
-
-
-# ---------------------------------------------------------------------------
-# Generic formula engine — used for any KPI that ISN'T in CALCULATORS above.
-# Most KPI formulas are written in a readable form like
-#   "(Current Revenue - Previous Revenue) / Previous Revenue × 100"
-# This parses that text into a safe arithmetic expression with one input
-# prompt per variable, so calculation works for almost every KPI in the
-# catalog without hand-writing 100+ individual functions.
-# ---------------------------------------------------------------------------
 import re
 from typing import List, Optional, Tuple
 
@@ -306,8 +280,6 @@ def parse_formula(formula: str) -> Optional[Tuple[str, List[str]]]:
 
     expr_template = "".join(out_tokens)
 
-    # Validate: substitute placeholders with a dummy value and make sure
-    # the result is pure arithmetic (only digits/operators) before eval.
     try:
         test_expr = expr_template.format(*(["1.0"] * len(labels)))
         if not re.fullmatch(r'[\d\.\+\-\*/() ]+', test_expr):
