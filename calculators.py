@@ -268,7 +268,7 @@ def parse_formula(formula: str) -> Optional[Tuple[str, List[str]]]:
             continue
         clean = label.rstrip("%").strip()
         if re.fullmatch(r'\d+(\.\d+)?', clean):
-            out_tokens.append(clean)  # numeric literal, e.g. "100"
+            out_tokens.append(clean)  
             continue
         if label not in label_index:
             label_index[label] = len(labels)
