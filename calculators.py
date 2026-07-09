@@ -276,7 +276,7 @@ def parse_formula(formula: str) -> Optional[Tuple[str, List[str]]]:
         out_tokens.append("{%d}" % label_index[label])
 
     if not labels:
-        return None
+        return None # return none
 
     expr_template = "".join(out_tokens)
 
